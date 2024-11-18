@@ -51,6 +51,13 @@
   color: #22215B;
 }
 
+.card-btn-container {
+  width: 100%;
+  display: flex; 
+  align-items: center;
+  justify-content: space-around;
+}
+
 .btn{
   font-size: 1rem;
   padding: .5rem 1rem;
@@ -68,4 +75,66 @@
   background: #FFFFFF;
   color: #22215B;
   border: 1px solid   #FFA726;
+}
+
+.taken-btn {
+  width: 12rem;
+  height: 2.3rem;
+  padding: 10px 15px;
+  border-radius: .5rem;
+  border: 1px solid #FFFFFF;
+  cursor: pointer;
+  color: white;
+  font-size: 1rem;
+}
+
+.taken-btn-available {
+  background-color: #4caf50;
+}
+.taken-btn-available:hover {
+  background-color: #6ddc71;
+}
+
+.taken-btn-taken {
+  background-color: #f44336; 
+}
+.taken-btn-taken:hover {
+  background-color: #f06c63;
+}
+
+.card-taken {
+  background: rgba(0, 0, 0, 0.4); 
+  color: #888;
+  filter: grayscale(100%);
+}
+
+.card-taken .card-img-holder img {
+  opacity: 0.5;
+}
+
+.card-taken .btn,
+.card-taken .taken-btn {
+  opacity: 0.7; 
+}
+
+.taken-btn-taken {
+  color: white;
+  pointer-events: auto;
+  position: relative;
+  transition: all 0.15s ease;
+}
+
+.taken-btn-taken:hover::after {
+  content: "Annuler";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.taken-btn-taken:hover {
+  color: transparent; 
 }

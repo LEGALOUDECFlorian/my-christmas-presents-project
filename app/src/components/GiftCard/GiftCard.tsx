@@ -1,5 +1,6 @@
+import React from "react";
 import { Database } from "../../@types/database.types"
-//import { useNavigate } from "react-router-dom";
+import { updateGifts } from "../../services/giftServices";
 import "./GiftCard.scss"
 
 type GiftDetail = Database["public"]["Tables"]["gift_detail"]["Row"];
@@ -9,42 +10,63 @@ interface GiftCardProps {
 };
 
 function GiftCard({ giftDetail }: GiftCardProps) {
- // const navigate = useNavigate();
-  // const handleClick = () => {
-  //   if (giftDetail.gift_link) {
-  //     navigate(giftDetail.gift_link); // Navigue si le lien est valide
-  //   } else {
-  //     console.error("Le lien est invalide ou manquant.");
-  //   }
-  // };
+
+  const [isTaken, setIsTaken] = React.useState(giftDetail.is_taken);
+
+  async function handleToggleIsTaken() {
+    try {
+      const newIsTaken = !isTaken;
+      setIsTaken(newIsTaken);
+
+      const updatedGift = await updateGifts(giftDetail.id, newIsTaken);
+
+      if (updatedGift) {
+        console.log("Cadeau mis à jour avec succès :", updatedGift);
+      } else {
+        console.log("Échec de la mise à jour ou aucun enregistrement trouvé.");
+      }
+
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour :", error);
+      setIsTaken(giftDetail.is_taken);
+    }
+  }
+
 
   return (
     <>
-      <div className="card">
-  <div className="card-img-holder">
-    <img src={`${giftDetail.gift_image}`} alt={`${giftDetail.gift_name}`}/>
-  </div>
-  <h3 className="blog-title">{giftDetail.gift_name}</h3>
-  <span className="blog-time">Prix: XX </span>
-  <p className="description">
-  </p>
-  <div className="options">
-    <span>
-     
-    </span>
-    <a
-  href={`${giftDetail.gift_link}`}
-  className="btn"
-  target="_blank" // Facultatif : ouvre dans un nouvel onglet
-  rel="noopener noreferrer" // Recommandé pour des raisons de sécurité avec target="_blank"
->
-  Allez voir
-</a>
-  </div>
-</div>
+      <div className={`card ${isTaken ? "card-taken" : ""}`}>
+        <div className="card-img-holder">
+          <img src={`${giftDetail.gift_image}`} alt={`${giftDetail.gift_name}`} />
+        </div>
+        <h3 className="blog-title">{giftDetail.gift_name}</h3>
+        <span className="blog-time">Prix: XX </span>
+        <p className="description">
+        </p>
+        <div className="options">
+          <span>
+          </span>
+          <div className="card-btn-container">
+            <button
+              className={`taken-btn ${isTaken ? "taken-btn-taken" : "taken-btn-available"}`}
+              onClick={handleToggleIsTaken}
+            >
+              {isTaken ? "Cadeau pris !" : "Prendre le cadeau"}
+            </button>
+            <a
+              href={`${giftDetail.gift_link}`}
+              className="btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Allez voir
+            </a>
+          </div>
+        </div>
+      </div>
 
     </>
-);
+  );
 }
 
 export default GiftCard;
