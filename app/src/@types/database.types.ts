@@ -11,29 +11,35 @@ export type Database = {
     Tables: {
       gift_detail: {
         Row: {
+          comment: string | null
           created_at: string
           gift_image: string | null
           gift_link: string | null
           gift_name: string | null
           id: number
+          is_on_sale: boolean | null
           is_taken: boolean | null
           update_at: string | null
         }
         Insert: {
+          comment?: string | null
           created_at?: string
           gift_image?: string | null
           gift_link?: string | null
           gift_name?: string | null
           id?: number
+          is_on_sale?: boolean | null
           is_taken?: boolean | null
           update_at?: string | null
         }
         Update: {
+          comment?: string | null
           created_at?: string
           gift_image?: string | null
           gift_link?: string | null
           gift_name?: string | null
           id?: number
+          is_on_sale?: boolean | null
           is_taken?: boolean | null
           update_at?: string | null
         }
